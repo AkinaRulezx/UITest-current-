@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/AkinaRulezx/AsUI/main/UI', true))()
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/AkinaRulezx/UITest-current-/main/func', true))()
 
 local window = Library:Window('Be a Fish')
 
