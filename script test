@@ -1,4 +1,42 @@
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/AkinaRulezx/AsUI/main/UI', true))()
 
+local window = Library:Window('Be a Fish')
+
+local speedBoostTab = window:Tab('Speed Boost')
+
+speedBoostTab:Label("Speed Boost", Color3.fromRGB(255, 255, 255))
+
+speedBoostTab:Slider("Speed", 16, 1000, 55, function(value)
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChildOfClass('Humanoid') then
+        player.Character.Humanoid.WalkSpeed = value  -- Set WalkSpeed to the slider value
+    end
+end)
+
+speedBoostTab:Label("When enabled, speed slider will not work.", Color3.fromRGB(200, 200, 200))
+
+local speedBoostToggle = false
+speedBoostTab:Toggle('Enable Speed Boost', false, function(state)
+    speedBoostToggle = state
+    local player = game.Players.LocalPlayer
+    if speedBoostToggle then
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Set initial WalkSpeed change if desired
+        player.Character.Humanoid.WalkSpeed = 55
+
+        game:GetService("RunService").Stepped:Connect(function()
+            if not speedBoostToggle then return end
+            if player.Character ~= character then
+                character = player.Character
+                player.Character.Humanoid.WalkSpeed = 55  
+            end
+
+            if player.Character.Humanoid.WalkSpeed ~= 55 then
+                player.Character.Humanoid.WalkSpeed = 55
+            end
+        end)
+    else
         if player.Character and player.Character:FindFirstChildOfClass('Humanoid') then
             player.Character.Humanoid.WalkSpeed = 16  -- Reset to default WalkSpeed
         end
